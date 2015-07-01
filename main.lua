@@ -51,6 +51,8 @@ tile_id_table = {
 --have the image be a string, then just replace the string with the data from love.graphics.newImage afterwards
 
 function love.load()
+	math.randomseed( os.time() )
+	
 	tile          = love.graphics.newImage("tile.png")
 	--wall          = love.graphics.newImage("wall.png")
 	--dirt          = 
@@ -59,7 +61,7 @@ function love.load()
 	mapsize       = {20,20}
 	scale         = 1
 	offset        = {0,0}
-	playerpos     = {0,0}
+	playerpos     = {math.random(1,mapsize[1]),math.random(1,mapsize[2])}
 	goaltile      = nil
 	movementfloat = {0,0}
 	moving        = false
