@@ -15,7 +15,7 @@ end
 function add_enemies()
 	enemy_table = {}
 	
-	for i = 1,math.random(30,60) do 
+	for i = 1,math.random(300,600) do --probably going to crash
 		--ai, pos, goaltile, movementfloat,moving
 		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false}
 	end
