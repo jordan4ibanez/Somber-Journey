@@ -24,7 +24,8 @@ Pope John Paul II
 
 you can't move back to the previous tile until you've finished moving to the other one, that's part of the difficulty
 
-fast footstep = https://www.freesound.org/people/RonaldVanWonderen/sounds/110099/
+add a minimap
+
 
 
 ]]--
@@ -33,6 +34,7 @@ dofile("movement.lua")
 dofile("helpers.lua")
 dofile("terrain.lua")
 dofile("enemy.lua")
+dofile("gui.lua")
 
 
 
@@ -45,7 +47,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	tilesize      = 64 -- for high quality 16 bit graphics
-	mapsize       = {20,20} --NOTE::::::MAKE TILES ON SCREEN RENDER ONLY, SAME WITH ENEMIES <- note for later ...well that was fun, thanks for watching!
+	mapsize       = {800,800} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
@@ -68,12 +70,21 @@ end
 
 --I draw the player as static, and the map and other entities move around them
 function love.draw()
+	windowwidth   = love.graphics.getWidth()
+	windowheight  = love.graphics.getHeight()
+	windowcenter  = {windowwidth/2,windowheight/2}
+	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
+	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
+	
 	draw_map()
 	--draw player
 	love.graphics.draw(player, (windowwidth/2), (windowheight/2), 0, 1, 1, tilesize / 2, tilesize / 2)
 	
 	--draw enemies
 	draw_enemies()
+	
+	--draw the selected tile
+	drawselection()
 	
 	--debug visual
 	if speed == walkspeed then
@@ -86,6 +97,9 @@ function love.draw()
 end
 
 function love.update(dt,movement)
+	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
+	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()
 	enemy_movement()
+	mousecontrol()
 end
