@@ -34,7 +34,12 @@ function add_enemies()
 	for i = 1,math.random(1,maxenemies) do 
 		--ai, pos, goaltile, movementfloat,moving
 		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false}
-		print(i)
+	end
+end
+--this is just a fun testing function
+function add_enemies_to_table()
+	for i = 1,math.random(1,5) do
+		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false})
 	end
 end
 

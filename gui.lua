@@ -10,7 +10,18 @@ function tileselection()
 			terrain[selected_tile[1]][selected_tile[2]] = math.random(1,tablelength(tile_id_table))
 			dig:stop()
 			dig:play()
+			for i = 1,tablelength(enemy_table) do
+				if enemy_table[i] then
+					if enemy_table[i][2][1] == selected_tile[1] and enemy_table[i][2][2] == selected_tile[2] then
+						table.remove(enemy_table, i)
+					end
+				end
+			end
 		end
+	elseif love.mouse.isDown("m") then
+		add_enemies()
+	elseif love.mouse.isDown("l") then
+		add_enemies_to_table()
 	end
 end
 

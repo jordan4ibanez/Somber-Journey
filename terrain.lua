@@ -3,7 +3,6 @@ function terrain_gen()
 	terrain = {}
 	math.randomseed( os.time() )
 	for  x = 1,mapsize[1] do
-		print("Rendering row "..x)
 		terrain[x] = {}
 		for  y = 1,mapsize[2] do
 			terrain[x][y] = math.random(1,tablelength(tile_id_table))
