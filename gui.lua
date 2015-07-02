@@ -6,11 +6,11 @@ function tileselection()
 	selected_tile = {(math.floor((selectionx-windowcenter[1])/tilesize))+playerpos[1]+2,(math.floor((selectiony-windowcenter[2])/tilesize))+playerpos[2]+2}
 	
 	if love.mouse.isDown("r") then
-
-		terrain[selected_tile[1]][selected_tile[2]] = math.random(1,tablelength(tile_id_table))
-		dig:stop()
-		dig:play()
-
+		if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] then
+			terrain[selected_tile[1]][selected_tile[2]] = math.random(1,tablelength(tile_id_table))
+			dig:stop()
+			dig:play()
+		end
 	end
 end
 

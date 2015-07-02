@@ -31,7 +31,7 @@ end
 function add_enemies()
 	enemy_table = {}
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
-	for i = 1,math.random(500,1000) do 
+	for i = 1,math.random(1,maxenemies) do 
 		--ai, pos, goaltile, movementfloat,moving
 		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false}
 		print(i)
