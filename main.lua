@@ -26,7 +26,7 @@ you can't move back to the previous tile until you've finished moving to the oth
 
 add a minimap
 
-
+dig https://www.freesound.org/people/Dymewiz/sounds/111119/
 
 ]]--
 
@@ -44,6 +44,7 @@ function love.load()
 	math.randomseed( os.time() )
 	footstep      = love.audio.newSource("footstep.wav", "static")
 	fastfootstep  = love.audio.newSource("fastfootstep.wav", "static")
+	dig           = love.audio.newSource("dig.wav", "static")
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	tilesize      = 64 -- for high quality 16 bit graphics
@@ -101,5 +102,5 @@ function love.update(dt,movement)
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()
 	enemy_movement()
-	mousecontrol()
+	tileselection()
 end
