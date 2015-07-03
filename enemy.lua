@@ -4,6 +4,9 @@ Possibly deactivate offscreen enemies?
 ]]--
 
 --draw the enemies on the map
+--show the speed at which the player moves
+
+
 function draw_enemies()	
 	--let's see if we render the object
 	local x_render    = math.floor(windowcenter[1]/tilesize + 0.5)+2 --figure out why you have to add + 2 later
@@ -22,7 +25,15 @@ function draw_enemies()
 		if xer >= xmin and xer <= xmax and yer >= ymin and yer <= ymax then
 			local literalx = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
 			local literaly = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
-			love.graphics.draw(enemy, literalx, literaly, 0, 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(player, literalx, literaly, 0, 1, 1, tilesize / 2, tilesize / 2)
+			--debug visual
+			if enemy_table[i][6] == walkspeed then
+				love.graphics.print('WALKING', literalx-(tilesize/2), literaly+20)
+			elseif enemy_table[i][6] == runspeed then
+				love.graphics.print('RUNNING', literalx-(tilesize/2), literaly+20)
+			elseif enemy_table[i][6] == sneakspeed then
+				love.graphics.print('SNEAKING', literalx-(tilesize/2), literaly+20)
+			end
 		end
 	end
 end
@@ -32,14 +43,14 @@ function add_enemies()
 	enemy_table = {}
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
 	for i = 1,math.random(1,maxenemies) do 
-		--ai, pos, goaltile, movementfloat,moving
-		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false}
+		--ai, pos, goaltile, movementfloat,moving,speed
+		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0}
 	end
 end
 --this is just a fun testing function
 function add_enemies_to_table()
 	for i = 1,math.random(1,5) do
-		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false})
+		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0})
 	end
 end
 
@@ -77,16 +88,16 @@ function enemy_movement()
 			
 			if enemy_table[i][3][1] ~= nil then
 				if enemy_table[i][3][1] - enemy_table[i][2][1] > 0 then
-					enemy_table[i][4][1] = enemy_table[i][4][1] + 1
+					enemy_table[i][4][1] = enemy_table[i][4][1] + enemy_table[i][6]
 				elseif enemy_table[i][3][1] - enemy_table[i][2][1] < 0 then
-					enemy_table[i][4][1] = enemy_table[i][4][1] - 1
+					enemy_table[i][4][1] = enemy_table[i][4][1] - enemy_table[i][6]
 				end
 			end
 			if enemy_table[i][3][2] ~= nil then
 				if enemy_table[i][3][2] - enemy_table[i][2][2] > 0 then
-					enemy_table[i][4][2] = enemy_table[i][4][2] + 1
+					enemy_table[i][4][2] = enemy_table[i][4][2] + enemy_table[i][6]
 				elseif enemy_table[i][3][2] - enemy_table[i][2][2] < 0 then
-					enemy_table[i][4][2] = enemy_table[i][4][2] - 1
+					enemy_table[i][4][2] = enemy_table[i][4][2] - enemy_table[i][6]
 				end
 			end
 			--reset the variables so you can move at the end of the walk cycle
@@ -106,7 +117,7 @@ function enemy_movement()
 		--do enemy ai if the enemy if it's onscreen
 		if xer >= xmin and xer <= xmax and yer >= ymin and yer <= ymax then	
 			--random direction
-			local direction = math.random(1,4)
+			local direction = math.random(1,4)			
 			
 			if not enemy_table[i][5] then
 
@@ -115,6 +126,10 @@ function enemy_movement()
 					enemy_table[i][3] = {}
 				end
 				--
+				
+				--give enemies random speed
+				local speedtable = {1,2,4}
+				enemy_table[i][6] = speedtable[math.random(1,3)]
 
 				if direction == 1 then
 					--offset[2] = offset[2] + 1

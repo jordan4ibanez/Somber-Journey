@@ -72,9 +72,6 @@ end
 
 --I draw the player as static, and the map and other entities move around them
 function love.draw()
-	windowwidth   = love.graphics.getWidth()
-	windowheight  = love.graphics.getHeight()
-	windowcenter  = {windowwidth/2,windowheight/2}
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	
@@ -88,14 +85,10 @@ function love.draw()
 	--draw the selected tile
 	drawselection()
 	
-	--debug visual
-	if speed == walkspeed then
-		love.graphics.print('WALKING', 10, 10)
-	elseif speed == runspeed then
-		love.graphics.print('RUNNING', 10, 10)
-	elseif speed == sneakspeed then
-		love.graphics.print('SNEAKING', 10, 10)
-	end
+	--show the speed
+	showspeed()
+	
+
 end
 
 function love.update(dt,movement)
