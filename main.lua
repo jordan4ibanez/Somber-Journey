@@ -28,6 +28,10 @@ add a minimap
 
 dig https://www.freesound.org/people/Dymewiz/sounds/111119/
 
+
+make the player top down view like [o] with the rotation turning towards the direction they're going
+
+
 ]]--
 
 dofile("movement.lua")
@@ -49,7 +53,7 @@ function love.load()
 	enemy         = love.graphics.newImage("enemy.png")
 	tilesize      = 64 -- for high quality 16 bit graphics
 	mapsize       = {20,20} --Truely huge maps (break this up into chunks (8000x8000 for now))
-	maxenemies    = 100
+	maxenemies    = 0
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
@@ -63,6 +67,15 @@ function love.load()
 	windowwidth   = love.graphics.getWidth()
 	windowheight  = love.graphics.getHeight()
 	windowcenter  = {windowwidth/2,windowheight/2}
+	
+	--directional vars
+	rot = 0
+	
+	dleft  = 270
+	dright = 90
+	dup    = 0
+	ddown  = 180
+	
 	terrain_gen()
 	add_enemies()
 end
@@ -77,7 +90,7 @@ function love.draw()
 	
 	draw_map()
 	--draw player
-	love.graphics.draw(player, (windowwidth/2), (windowheight/2), 0, 1, 1, tilesize / 2, tilesize / 2)
+	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), 1, 1, tilesize / 2, tilesize / 2)
 	
 	--draw enemies
 	draw_enemies()
@@ -92,6 +105,7 @@ function love.draw()
 end
 
 function love.update(dt,movement)
+
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()

@@ -61,7 +61,7 @@ function draw_map()
 	end
 end
 
-
-function demolishterrain()
+--Handling modification of the terrain - possibly have pickaxes and drills, and make a table for cracking blocks and such
+function modifyterrain()
 	
 end

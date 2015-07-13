@@ -1,10 +1,9 @@
 --[[
 NOTES:
 Possibly deactivate offscreen enemies?
+Draw the enemies on the map
+Show the speed at which the player moves
 ]]--
-
---draw the enemies on the map
---show the speed at which the player moves
 
 
 function draw_enemies()	
@@ -23,16 +22,17 @@ function draw_enemies()
 		yer = y - 1
 		--draw the enemy if it's onscreen
 		if xer >= xmin and xer <= xmax and yer >= ymin and yer <= ymax then
-			local literalx = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
-			local literaly = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
-			love.graphics.draw(player, literalx, literaly, 0, 1, 1, tilesize / 2, tilesize / 2)
+			--local literalx = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
+			--local literaly = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
+			
+			love.graphics.draw(enemy, enemyrealpos(i)[1], enemyrealpos(i)[2], enemy_table[i][7], 1, 1, tilesize / 2, tilesize / 2)
 			--debug visual
 			if enemy_table[i][6] == walkspeed then
-				love.graphics.print('WALKING', literalx-(tilesize/2), literaly+20)
+				love.graphics.print('WALKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
 			elseif enemy_table[i][6] == runspeed then
-				love.graphics.print('RUNNING', literalx-(tilesize/2), literaly+20)
+				love.graphics.print('RUNNING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
 			elseif enemy_table[i][6] == sneakspeed then
-				love.graphics.print('SNEAKING', literalx-(tilesize/2), literaly+20)
+				love.graphics.print('SNEAKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
 			end
 		end
 	end
@@ -43,14 +43,14 @@ function add_enemies()
 	enemy_table = {}
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
 	for i = 1,math.random(1,maxenemies) do 
-		--ai, pos, goaltile, movementfloat,moving,speed
-		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0}
+		--ai, pos, goaltile, movementfloat,moving,speed,rotation
+		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0}
 	end
 end
 --this is just a fun testing function
 function add_enemies_to_table()
 	for i = 1,math.random(1,5) do
-		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0})
+		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0})
 	end
 end
 
@@ -84,6 +84,10 @@ function enemy_movement()
 	ymin = literal_pos_y - y_render
 	ymax = literal_pos_y + y_render
 	for i = 1,tablelength(enemy_table) do
+	
+		-- a test
+		enemy_table[i][7] = enemy_table[i][7] + ((math.random()/100))
+		
 		if enemy_table[i][5] then
 			
 			if enemy_table[i][3][1] ~= nil then

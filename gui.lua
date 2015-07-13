@@ -5,6 +5,10 @@ function tileselection()
 	selectiony = (((math.floor((mousey-windowcenter[2]-movementfloat[2])/tilesize + 0.5) * tilesize ) + windowcenter[2]) - (tilesize/2))+movementfloat[2]
 	selected_tile = {(math.floor((selectionx-windowcenter[1])/tilesize))+playerpos[1]+2,(math.floor((selectiony-windowcenter[2])/tilesize))+playerpos[2]+2}
 	----[[
+	
+	--this was an experiment, uncomment to have fun
+	
+	
 	--if love.mouse.isDown("r") then
 	--	if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] then
 		--	terrain[selected_tile[1]][selected_tile[2]] = math.random(1,tablelength(tile_id_table))

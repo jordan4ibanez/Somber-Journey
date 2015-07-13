@@ -1,9 +1,10 @@
+--[[
 function collisiondetection()
 	if up or down or left or right then
 		local xer = goaltile[1] + 1
 		local yer = goaltile[2] + 1
 		if xer > 0 and xer <= mapsize[1] and yer > 0 and yer <= mapsize[2] then
-			if tile_id_table[terrain[xer][yer]][3] == true then
+			if tile_id_table[terrain[xer][yer][3] == true then
 				--stop everything
 				goaltile = {0,0}
 				movementfloat = {0,0}
@@ -17,10 +18,14 @@ function collisiondetection()
 		end
 	end
 end
+]]--
 
 --these are the main controls for the player to move around the map
 function playercontrols()
+	playerfacedir()
+	
 	if moving then
+		
 		if speed == walkspeed then
 			footstep:play()
 		elseif speed == runspeed then
@@ -46,7 +51,7 @@ function playercontrols()
 		--reset the variables so you can move at the end of the walk cycle
 		if math.abs(round(movementfloat[1], 1)) == tilesize or math.abs(round(movementfloat[2], 1)) == tilesize then
 			playerpos = goaltile
-			goaltile = {0,0}
+			goaltile = nil
 			movementfloat = {0,0}
 			moving = false
 		end
@@ -101,6 +106,7 @@ function playercontrols()
 	end
 end
 
+--this checks if there's a tile that's not walkable in the direction the player's moving
 function collisiondetection()
 	if up or down or left or right then
 		local xer = goaltile[1] + 1
@@ -108,15 +114,85 @@ function collisiondetection()
 		if xer > 0 and xer <= mapsize[1] and yer > 0 and yer <= mapsize[2] then
 			if tile_id_table[terrain[xer][yer]][3] == true then
 				--stop everything
-				goaltile = {0,0}
+				goaltile = nil
 				movementfloat = {0,0}
 				moving = false
 			end
 		else
 			--stop everything (map boundaries)
-			goaltile = {0,0}
+			goaltile = nil
 			movementfloat = {0,0}
 			moving = false
 		end
 	end
+end
+
+--this controls the player's face direction
+function playerfacedir()
+		--old rotation
+		if oldrot == nil then
+			oldrot = rot
+		end
+		--get the new rotation - this does a lot of unnecesary calcs so fix this
+		if goaltile then
+			if goalrot == nil then
+				if goaltile[1] ~= nil then
+					if goaltile[1] - playerpos[1] > 0 then
+						goalrot = dright
+					elseif goaltile[1] - playerpos[1] < 0 then
+						goalrot = dleft
+					end
+				end
+				if goaltile[2] ~= nil then
+					if goaltile[2] - playerpos[2] > 0 then
+						goalrot = ddown
+					elseif goaltile[2] - playerpos[2] < 0 then
+						goalrot = dup
+					end
+				end
+			end
+		end
+		
+		local rottest = 0
+		
+		if goalrot then
+			rottest = rot-goalrot
+		end
+		
+		local rotationadd = 15 -- the speed at which the player turns
+				
+		--rotate the player
+		if goaltile then
+			if goaltile[1] ~= nil or goaltile[2] ~= nil then
+				if rot ~= nil and rot ~= goalrot then
+					if (rottest >= 0 and rottest <= 180) then
+						print(1)
+						rot = rot - rotationadd
+					elseif (rottest <= 0 and rottest >= -180) then
+						print(2)
+						rot = rot + rotationadd
+					elseif (rottest > 180 and rottest <= 360) then
+						print(3)
+						rot = rot + rotationadd
+					elseif (rottest < -180 and rottest >= -360) then
+						print(4)
+						rot = rot - rotationadd
+					end
+				end
+
+			end
+		end
+
+		--smooth 360 rotation 
+		if rot > 360 then
+			rot = 0
+		end
+		if rot < 0 then
+			rot = 360
+		end
+		
+		--reset the goalrot
+		if goalrot == rot then
+			goalrot = nil
+		end
 end
