@@ -39,6 +39,7 @@ dofile("helpers.lua")
 dofile("terrain.lua")
 dofile("enemy.lua")
 dofile("gui.lua")
+dofile("weapons.lua")
 
 
 
@@ -53,7 +54,7 @@ function love.load()
 	enemy         = love.graphics.newImage("enemy.png")
 	tilesize      = 64 -- for high quality 16 bit graphics
 	mapsize       = {20,20} --Truely huge maps (break this up into chunks (8000x8000 for now))
-	maxenemies    = 50
+	maxenemies    = 5
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
