@@ -129,10 +129,6 @@ end
 
 --this controls the player's face direction
 function playerfacedir()
-		--old rotation
-		if oldrot == nil then
-			oldrot = rot
-		end
 		--get the new rotation - this does a lot of unnecesary calcs so fix this
 		if goaltile then
 			if goalrot == nil then
@@ -159,23 +155,23 @@ function playerfacedir()
 			rottest = rot-goalrot
 		end
 		
-		local rotationadd = 15 -- the speed at which the player turns
+		local rotationadd = 15/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
 				
 		--rotate the player
 		if goaltile then
 			if goaltile[1] ~= nil or goaltile[2] ~= nil then
 				if rot ~= nil and rot ~= goalrot then
 					if (rottest >= 0 and rottest <= 180) then
-						print(1)
+						--print(1)
 						rot = rot - rotationadd
 					elseif (rottest <= 0 and rottest >= -180) then
-						print(2)
+						--print(2)
 						rot = rot + rotationadd
 					elseif (rottest > 180 and rottest <= 360) then
-						print(3)
+						--print(3)
 						rot = rot + rotationadd
 					elseif (rottest < -180 and rottest >= -360) then
-						print(4)
+						--print(4)
 						rot = rot - rotationadd
 					end
 				end
@@ -185,10 +181,10 @@ function playerfacedir()
 
 		--smooth 360 rotation 
 		if rot > 360 then
-			rot = 0
+			rot = (rot-360)
 		end
 		if rot < 0 then
-			rot = 360
+			rot = (rot+360)
 		end
 		
 		--reset the goalrot

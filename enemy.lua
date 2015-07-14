@@ -25,7 +25,7 @@ function draw_enemies()
 			--local literalx = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
 			--local literaly = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
 			
-			love.graphics.draw(enemy, enemyrealpos(i)[1], enemyrealpos(i)[2], enemy_table[i][7], 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(enemy, enemyrealpos(i)[1], enemyrealpos(i)[2], math.rad(enemy_table[i][7]), 1, 1, tilesize / 2, tilesize / 2)
 			--debug visual
 			if enemy_table[i][6] == walkspeed then
 				love.graphics.print('WALKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
@@ -43,14 +43,14 @@ function add_enemies()
 	enemy_table = {}
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
 	for i = 1,math.random(1,maxenemies) do 
-		--ai, pos, goaltile, movementfloat,moving,speed,rotation
-		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0}
+		--ai, pos, goaltile, movementfloat,moving,speed,rotation,goal rotation
+		enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0,0}
 	end
 end
 --this is just a fun testing function
 function add_enemies_to_table()
 	for i = 1,math.random(1,5) do
-		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0})
+		table.insert(enemy_table, {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0,0,0})
 	end
 end
 
@@ -86,7 +86,7 @@ function enemy_movement()
 	for i = 1,tablelength(enemy_table) do
 	
 		-- a test
-		enemy_table[i][7] = enemy_table[i][7] + ((math.random()/100))
+		enemyfacedir(i)
 		
 		if enemy_table[i][5] then
 			
@@ -165,4 +165,69 @@ function enemy_movement()
 			end
 		end
 	end
+end
+--this controls the enemies' face direction
+function enemyfacedir(i)
+		--get the new rotation - this does a lot of unnecesary calcs so fix this
+		if enemy_table[i][3] then
+			if enemy_table[i][8] == "nil" then
+				if enemy_table[i][3][1] ~= nil then
+					if enemy_table[i][3][1] - enemy_table[i][2][1] > 0 then
+						enemy_table[i][8] = dright
+					elseif enemy_table[i][3][1] - enemy_table[i][2][1] < 0 then
+						enemy_table[i][8] = dleft
+					end
+				end
+				if enemy_table[i][3][2] ~= nil then
+					if enemy_table[i][3][2] - enemy_table[i][2][2] > 0 then
+						enemy_table[i][8] = ddown
+					elseif enemy_table[i][3][2] - enemy_table[i][2][2] < 0 then
+						enemy_table[i][8] = dup
+					end
+				end
+			end
+		end
+		
+		local rottest = 0
+		
+		if enemy_table[i][8] then
+			rottest = enemy_table[i][7]-enemy_table[i][8]
+		end
+		
+		local rotationadd = 15/(4/enemy_table[i][6]) -- the speed at which the enemy turns
+				
+		--rotate the enemy
+		if goaltile then
+			if enemy_table[i][3][1] ~= nil or enemy_table[i][3][2] ~= nil then
+				if enemy_table[i][7] ~= nil and enemy_table[i][7] ~= enemy_table[i][8] then
+					if (rottest >= 0 and rottest <= 180) then
+						--print(1)
+						enemy_table[i][7] = enemy_table[i][7] - rotationadd
+					elseif (rottest <= 0 and rottest >= -180) then
+						--print(2)
+						enemy_table[i][7] = enemy_table[i][7] + rotationadd
+					elseif (rottest > 180 and rottest <= 360) then
+						--print(3)
+						enemy_table[i][7] = enemy_table[i][7] + rotationadd
+					elseif (rottest < -180 and rottest >= -360) then
+						--print(4)
+						enemy_table[i][7] = enemy_table[i][7] - rotationadd
+					end
+				end
+
+			end
+		end
+
+		--smooth 360 rotation 
+		if enemy_table[i][7] > 360 then
+			enemy_table[i][7] = (enemy_table[i][7]-360)
+		end
+		if enemy_table[i][7] < 0 then
+			enemy_table[i][7] = (enemy_table[i][7]+360)
+		end
+		
+		--reset the goalrot
+		if enemy_table[i][8] == enemy_table[i][7] then
+			enemy_table[i][8] = "nil"
+		end
 end
