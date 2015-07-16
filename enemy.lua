@@ -73,7 +73,7 @@ function enemycollisiondetection(i)
 	end
 end
 
---these are the main controls for the player to move around the map
+--these is the logic for the enemies to move around the map
 function enemy_movement()
 	--let's see if the enemy is awake
 	local x_render    = math.floor(windowcenter[1]/tilesize + 0.5)+2
@@ -133,7 +133,7 @@ function enemy_movement()
 				
 				--give enemies random speed
 				local speedtable = {1,2,4}
-				enemy_table[i][6] = speedtable[math.random(1,3)]
+				enemy_table[i][6] = 1--speedtable[math.random(1,3)]
 
 				if direction == 1 then
 					--offset[2] = offset[2] + 1

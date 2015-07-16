@@ -1,10 +1,10 @@
 --allow for mouse environment interactions
 function tileselection()
 	mousex,mousey = love.mouse.getPosition( )
+	--this is broken - this allows the mouse to select random tiles that actually aren't selected
 	selectionx = ((math.floor(((mousex-movementfloat[1])+windowcenter[1])/tilesize)*tilesize)-(windowcenter[1]))+(movementfloat[1])
 	selectiony = (((math.floor((mousey-windowcenter[2]-movementfloat[2])/tilesize + 0.5) * tilesize ) + windowcenter[2]) - (tilesize/2))+movementfloat[2]
 	selected_tile = {(math.floor((selectionx-windowcenter[1])/tilesize))+playerpos[1]+2,(math.floor((selectiony-windowcenter[2])/tilesize))+playerpos[2]+2}
-	----[[
 	
 	--this was an experiment, uncomment to have fun
 	
@@ -32,7 +32,10 @@ end
 
 --draw the visual of the selected tile
 function drawselection()
-	love.graphics.rectangle("line", selectionx, selectiony, tilesize , tilesize )
+	--print(selected_tile[1],selected_tile[2])
+	if (selected_tile[1] > 0 and selected_tile[1] < mapsize[1]) and (selected_tile[2] > 0 and selected_tile[2] <= mapsize[2]) then
+		love.graphics.rectangle("line", selectionx, selectiony, tilesize , tilesize )
+	end
 end
 
 --show the speed at which the player moves
@@ -46,16 +49,7 @@ function showspeed()
 		love.graphics.print('SNEAKING', 10, 10)
 	end
 end
---test function (detonation)
-function blow_up()
-	for x = playerpos[1]-2,playerpos[1]+4 do
-		for y = playerpos[2]-2,playerpos[2]+4 do
-			if x > 0 and x <= mapsize[1] and y > 0 and y <= mapsize[2] then
-				terrain[x][y] = 1
-			end
-		end
-	end
-end
+
 function love.keypressed( key )
 	if key == "escape" then
 		print("See ya later!")

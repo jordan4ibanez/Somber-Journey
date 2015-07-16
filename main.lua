@@ -1,3 +1,16 @@
+
+
+
+
+--CURRENTLY IN A FEATURE FREEZE!!!!!! THERE ARE A LOT OF BUGS THAT I'M FIXING SO IF YOU LOOK AT THIS SOMETHING MIGHT BE BROKEN UNTIL THIS WARNING IS REMOVED!!!!
+
+
+
+
+
+
+
+
 --[[
 PROJECT GOALS:
 A tile based, pre, during, and post apocalyptic game.
@@ -26,11 +39,7 @@ you can't move back to the previous tile until you've finished moving to the oth
 
 add a minimap
 
-dig https://www.freesound.org/people/Dymewiz/sounds/111119/
-
-
-make the player top down view like [o] with the rotation turning towards the direction they're going
-
+Rewrite most of this code to allow the scaling of the map
 
 ]]--
 
@@ -50,11 +59,15 @@ function love.load()
 	footstep      = love.audio.newSource("footstep.wav", "static")
 	fastfootstep  = love.audio.newSource("fastfootstep.wav", "static")
 	dig           = love.audio.newSource("dig.wav", "static")
+	
+	--note here: When drawing stuff, do tilesize/64 to get the scale
+	tilesize      = 64 -- for high quality 16 bit graphics 
+	
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
-	tilesize      = 64 -- for high quality 16 bit graphics
+	
 	mapsize       = {20,20} --Truely huge maps (break this up into chunks (8000x8000 for now))
-	maxenemies    = 5
+	maxenemies    = 1
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
@@ -86,12 +99,13 @@ end
 
 --I draw the player as static, and the map and other entities move around them
 function love.draw()
-	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
-	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
+
+	--player actual pos
+	literalpos()
 	
 	draw_map()
 	--draw player
-	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), 1, 1, tilesize / 2, tilesize / 2)
+	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
 	
 	--draw enemies
 	draw_enemies()
@@ -102,11 +116,10 @@ function love.draw()
 	--show the speed
 	showspeed()
 	
-
 end
 
 function love.update(dt,movement)
-
+	
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()

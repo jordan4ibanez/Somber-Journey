@@ -18,3 +18,19 @@ end
 
 --pi
 pi = math.pi
+
+--this is a test of map scaling - everything is currently broken when it comes to scaling from 64 pixels
+tileadd = true
+function tilesizetest()
+	if tileadd == true then
+		tilesize = tilesize + 1
+	elseif tileadd == false then
+		tilesize = tilesize - 1
+	end
+	
+	if tilesize == 64 then
+		tileadd = false
+	elseif tilesize == 32 then
+		tileadd = true
+	end
+end
