@@ -5,39 +5,6 @@ Draw the enemies on the map
 Show the speed at which the player moves
 ]]--
 
-
-function draw_enemies()	
-	--let's see if we render the object
-	local x_render    = math.floor(windowcenter[1]/tilesize + 0.5)+2 --figure out why you have to add + 2 later
-	local y_render    = math.floor(windowcenter[2]/tilesize + 0.5)+2
-	local xmin,xmax,ymin,ymax = 0,0,0,0
-	xmin = literal_pos_x - x_render
-	xmax = literal_pos_x + x_render
-	ymin = literal_pos_y - y_render
-	ymax = literal_pos_y + y_render
-	
-	for i = 1,tablelength(enemy_table) do
-		local x,y = enemy_table[i][2][1],enemy_table[i][2][2]
-		xer = x - 1
-		yer = y - 1
-		--draw the enemy if it's onscreen
-		if xer >= xmin and xer <= xmax and yer >= ymin and yer <= ymax then
-			--local literalx = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
-			--local literaly = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
-			
-			love.graphics.draw(enemy, enemyrealpos(i)[1], enemyrealpos(i)[2], math.rad(enemy_table[i][7]), 1, 1, tilesize / 2, tilesize / 2)
-			--debug visual
-			if enemy_table[i][6] == walkspeed then
-				love.graphics.print('WALKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
-			elseif enemy_table[i][6] == runspeed then
-				love.graphics.print('RUNNING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
-			elseif enemy_table[i][6] == sneakspeed then
-				love.graphics.print('SNEAKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
-			end
-		end
-	end
-end
-
 --add enemies to global enemy table
 function add_enemies()
 	enemy_table = {}
@@ -194,7 +161,7 @@ function enemyfacedir(i)
 			rottest = enemy_table[i][7]-enemy_table[i][8]
 		end
 		
-		local rotationadd = 15/(4/enemy_table[i][6]) -- the speed at which the enemy turns
+		local rotationadd = 15--/(4/enemy_table[i][6]) -- the speed at which the enemy turns
 				
 		--rotate the enemy
 		if goaltile then
@@ -217,10 +184,11 @@ function enemyfacedir(i)
 
 			end
 		end
-
+		
 		--smooth 360 rotation 
 		if enemy_table[i][7] > 360 then
 			enemy_table[i][7] = (enemy_table[i][7]-360)
+			
 		end
 		if enemy_table[i][7] < 0 then
 			enemy_table[i][7] = (enemy_table[i][7]+360)

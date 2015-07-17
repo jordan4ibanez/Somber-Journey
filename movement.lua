@@ -109,8 +109,8 @@ end
 --this checks if there's a tile that's not walkable in the direction the player's moving
 function collisiondetection()
 	if up or down or left or right then
-		local xer = goaltile[1] + 1
-		local yer = goaltile[2] + 1
+		local xer = goaltile[1]
+		local yer = goaltile[2]
 		if xer > 0 and xer <= mapsize[1] and yer > 0 and yer <= mapsize[2] then
 			if tile_id_table[terrain[xer][yer]][3] == true then
 				--stop everything
@@ -155,7 +155,7 @@ function playerfacedir()
 			rottest = rot-goalrot
 		end
 		
-		local rotationadd = 15/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
+		local rotationadd = 15--/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
 				
 		--rotate the player
 		if goaltile then
@@ -191,4 +191,29 @@ function playerfacedir()
 		if goalrot == rot then
 			goalrot = nil
 		end
+end
+
+--keypress functions
+function love.keypressed( key )
+	if key == "escape" then
+		local salutations = {
+			"See ya later!",
+			"Thanks for playing!",
+			"Try Minetest too!",
+			"Sfan5 approved!\n\n\n\n\n\nClaims cannot be proven...", -- use this for the title card instead
+			"Try DOOM too!",
+			"Have fun in the real world!",
+			"Adu!",
+			"See you next time!",
+			"No wait come back!",
+			"You've got quite a nice terminal!",
+			"Don't leave for too long! :(",
+			}
+			
+		print(salutations[math.random(1,tablelength(salutations))])
+		love.event.quit()
+	end
+	--if key == " " then
+		
+	--end
 end

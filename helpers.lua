@@ -11,15 +11,15 @@ function tablelength(T)
 end
 --enemy's real position on map
 function enemyrealpos(i)
-	local x = (((xer * tilesize ) + windowcenter[1]) - (playerpos[1] * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
-	local y = (((yer * tilesize ) + windowcenter[2]) - (playerpos[2] * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
+	local x = (((enemy_table[i][2][1] * tilesize ) + windowcenter[1]) - ((playerpos[1]) * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
+	local y = (((enemy_table[i][2][2] * tilesize ) + windowcenter[2]) - ((playerpos[2]) * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
 	return({x,y})
 end
 
 --pi
 pi = math.pi
 
---this is a test of map scaling - everything is currently broken when it comes to scaling from 64 pixels
+--this is a test of map scaling - everything is currently broken when it comes to scaling from 64 pixels, so use it if you want to see some chaos
 tileadd = true
 function tilesizetest()
 	if tileadd == true then

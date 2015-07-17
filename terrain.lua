@@ -10,7 +10,7 @@ function terrain_gen()
 	end
 end
 
-
+--make this load up an image if it's not already loaded up instead of doing this
 tile_id_table = {
 --{"name","texture","wall","hurtplayer"} --table example
 {"dirt"  ,love.graphics.newImage("dirt.png")   ,false ,false}, --dirt
@@ -18,20 +18,22 @@ tile_id_table = {
 {"dead grass"  ,love.graphics.newImage("dead_grass.png")   ,false ,false}, --wall
 }
 
---Handling modification of the terrain - possibly have pickaxes and drills, and make a table for cracking blocks and such
+--Handling modification of the terrain - possibly have pickaxes and drills, and make a table for cracking tiles and such
 function modifyterrain()
 	
 end
 
 --test function (detonation)
 function blow_up()
-	for x = playerpos[1],playerpos[1] do
-		for y = playerpos[2],playerpos[2] do
+	local selector = realselectionpos()
+
+	--for x = playerpos[1],playerpos[1] do
+	--	for y = playerpos[2],playerpos[2] do
 			--if x > 0 and x <= mapsize[1] and y > 0 and y <= mapsize[2] then
-				terrain[x][y] = 1
+				terrain[selector[1]][selector[2]] = 1
 			--end
-		end
-	end
+	--	end
+	--end
 end
 
 

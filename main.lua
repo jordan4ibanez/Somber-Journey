@@ -49,6 +49,7 @@ dofile("terrain.lua")
 dofile("enemy.lua")
 dofile("gui.lua")
 dofile("weapons.lua")
+dofile("graphics.lua")
 
 
 
@@ -73,14 +74,19 @@ function love.load()
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
 	goaltile      = nil
 	movementfloat = {0,0}
+	
 	moving        = false
+	
 	sneakspeed    = 1
 	walkspeed     = 2
 	runspeed      = 4
+	
 	speed         = walkspeed
 	windowwidth   = love.graphics.getWidth()
 	windowheight  = love.graphics.getHeight()
 	windowcenter  = {windowwidth/2,windowheight/2}
+	
+	selection     = false
 	
 	--directional vars
 	rot = 0
@@ -104,8 +110,8 @@ function love.draw()
 	literalpos()
 	
 	draw_map()
-	--draw player
-	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+	
+	drawplayer()
 	
 	--draw enemies
 	draw_enemies()
