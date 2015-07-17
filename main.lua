@@ -67,7 +67,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {20,20} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	mapsize       = {10,10} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 1
 	scale         = 1
 	offset        = {0,0}
@@ -125,10 +125,11 @@ function love.draw()
 end
 
 function love.update(dt,movement)
-	
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()
+	
 	enemy_movement()
+	
 	tileselection()
 end

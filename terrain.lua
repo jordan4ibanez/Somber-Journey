@@ -23,20 +23,6 @@ function modifyterrain()
 	
 end
 
---test function (detonation)
-function blow_up()
-	local selector = realselectionpos()
-
-	--for x = playerpos[1],playerpos[1] do
-	--	for y = playerpos[2],playerpos[2] do
-			--if x > 0 and x <= mapsize[1] and y > 0 and y <= mapsize[2] then
-				terrain[selector[1]][selector[2]] = 1
-			--end
-	--	end
-	--end
-end
-
-
 -- do this position for on the fly render adjust 
 function literalpos()
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) 

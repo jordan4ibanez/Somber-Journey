@@ -9,10 +9,10 @@ function tablelength(T)
 	for _ in pairs(T) do count = count + 1 end
 	return count
 end
---enemy's real position on map
-function enemyrealpos(i)
-	local x = (((enemy_table[i][2][1] * tilesize ) + windowcenter[1]) - ((playerpos[1]) * tilesize)) + movementfloat[1] + enemy_table[i][4][1] --KEEP THIS AS PLAYERPOS SO IT FOLLOWS THE CONTINUITY AROUND THE PLAYER 
-	local y = (((enemy_table[i][2][2] * tilesize ) + windowcenter[2]) - ((playerpos[2]) * tilesize)) + movementfloat[2] + enemy_table[i][4][2] --OR IN OTHER WORDS, DO IT SO THE ENEMY IS DRAWN AS PART OF THE MAP
+--player's float position (Actual position)
+function playerrealpos()
+	local x = playerpos[1]-(movementfloat[1]/64)
+	local y = playerpos[2]-(movementfloat[2]/64)
 	return({x,y})
 end
 
@@ -20,7 +20,7 @@ end
 pi = math.pi
 
 --this is a test of map scaling - everything is currently broken when it comes to scaling from 64 pixels, so use it if you want to see some chaos
-tileadd = true
+tileadd = false
 function tilesizetest()
 	if tileadd == true then
 		tilesize = tilesize + 1
@@ -33,4 +33,39 @@ function tilesizetest()
 	elseif tilesize == 32 then
 		tileadd = true
 	end
+end
+
+--print tables
+function print_r ( t )  
+    local print_r_cache={}
+    local function sub_print_r(t,indent)
+        if (print_r_cache[tostring(t)]) then
+            print(indent.."*"..tostring(t))
+        else
+            print_r_cache[tostring(t)]=true
+            if (type(t)=="table") then
+                for pos,val in pairs(t) do
+                    if (type(val)=="table") then
+                        print(indent.."["..pos.."] => "..tostring(t).." {")
+                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+                        print(indent..string.rep(" ",string.len(pos)+6).."}")
+                    elseif (type(val)=="string") then
+                        print(indent.."["..pos..'] => "'..val..'"')
+                    else
+                        print(indent.."["..pos.."] => "..tostring(val))
+                    end
+                end
+            else
+                print(indent..tostring(t))
+            end
+        end
+    end
+    if (type(t)=="table") then
+        print(tostring(t).." {")
+        sub_print_r(t,"  ")
+        print("}")
+    else
+        sub_print_r(t,"  ")
+    end
+    print()
 end

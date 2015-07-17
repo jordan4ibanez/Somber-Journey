@@ -20,7 +20,7 @@ function tileselection()
 			dig:play()
 			for i = 1,tablelength(enemy_table) do
 				if enemy_table[i] then
-					if enemy_table[i][2][1] == selected_tile[1] and enemy_table[i][2][2] == selected_tile[2] then
+					if enemy_table[i]["pos"][1] == selected_tile[1] and enemy_table[i]["pos"][2] == selected_tile[2] then
 						table.remove(enemy_table, i)
 					end
 				end
@@ -32,11 +32,4 @@ function tileselection()
 		add_enemies_to_table()
 	end
 	
-end
-
-
-function realselectionpos()
-	local selectionxer = math.floor(((selectionx-((windowwidth/2)-(tilesize/2)))/tilesize)+playerpos[1] + 0.5) -- this gets how many tiles the selection is away from the player
-	local selectionyer = math.floor(((selectiony-((windowheight/2)-(tilesize/2)))/tilesize)+playerpos[2] + 0.5)
-	return({selectionxer,selectionyer})
 end

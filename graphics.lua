@@ -52,17 +52,17 @@ function draw_enemies()
 	ymax = literal_pos_y + y_render
 	
 	for i = 1,tablelength(enemy_table) do
-		local x,y = enemy_table[i][2][1],enemy_table[i][2][2]
+		local x,y = enemy_table[i]["pos"][1],enemy_table[i]["pos"][2]
 		--draw the enemy if it's onscreen
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
-			love.graphics.draw(enemy, enemyrealpos(i)[1], enemyrealpos(i)[2], math.rad(enemy_table[i][7]), 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), 1, 1, tilesize / 2, tilesize / 2)
 			--debug visual
 			if enemy_table[i][6] == walkspeed then
-				love.graphics.print('WALKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
+				love.graphics.print('WALKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
 			elseif enemy_table[i][6] == runspeed then
-				love.graphics.print('RUNNING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
+				love.graphics.print('RUNNING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
 			elseif enemy_table[i][6] == sneakspeed then
-				love.graphics.print('SNEAKING', enemyrealpos(i)[1]-(tilesize/2), enemyrealpos(i)[2]+20)
+				love.graphics.print('SNEAKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
 			end
 		end
 	end
