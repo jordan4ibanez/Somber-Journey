@@ -8,12 +8,9 @@ function add_enemies()
 	enemy_table = {}
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
 	for i = 1,math.random(1,maxenemies) do 
-		--ai, pos, goaltile, movementfloat, moving, speed, rotation, goal rotation
-		
-		--enemy_table[i] = {"ai", {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}, {0,0},{0,0},false,0,0,0} -- the old style
 		table.insert(enemy_table, {
 							pos           = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)},
-							goaltile      = {0,0}, --THIS SHOULD BE NIL ----------------------------------------------------
+							goaltile      = nil, 
 							movementfloat = {0,0},
 							moving        = false,
 							speed         = 0,
@@ -28,7 +25,7 @@ function add_enemies_to_table()
 	for i = 1,math.random(1,5) do
 		table.insert(enemy_table, {
 							pos           = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)},
-							goaltile      = {0,0}, --THIS SHOULD BE NIL ----------------------------------------------------
+							goaltile      = nil,
 							movementfloat = {0,0},
 							moving        = false,
 							speed         = 0,

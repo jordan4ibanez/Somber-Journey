@@ -67,7 +67,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {15,15} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	mapsize       = {200,200} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 1
 	scale         = 1
 	offset        = {0,0}
