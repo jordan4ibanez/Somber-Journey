@@ -57,11 +57,11 @@ function draw_enemies()
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
 			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), 1, 1, tilesize / 2, tilesize / 2)
 			--debug visual
-			if enemy_table[i][6] == walkspeed then
+			if enemy_table[i]["speed"] == walkspeed then
 				love.graphics.print('WALKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
-			elseif enemy_table[i][6] == runspeed then
+			elseif enemy_table[i]["speed"] == runspeed then
 				love.graphics.print('RUNNING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
-			elseif enemy_table[i][6] == sneakspeed then
+			elseif enemy_table[i]["speed"] == sneakspeed then
 				love.graphics.print('SNEAKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
 			end
 		end
