@@ -15,7 +15,10 @@ function tileselection()
 	
 	if love.mouse.isDown("l") then
 		if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] then
-			terrain[selected_tile[1]][selected_tile[2]] = math.random(1,tablelength(tile_id_table))
+			
+			--terrain modificaton test
+			modifyterrain()
+			
 			dig:stop()
 			dig:play()
 			for i = 1,tablelength(enemy_table) do
@@ -32,4 +35,9 @@ function tileselection()
 		add_enemies_to_table()
 	end
 	
+end
+
+--do this for clicks instead of holding down the mouse
+function mouseclick()
+
 end

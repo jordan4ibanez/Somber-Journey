@@ -10,17 +10,38 @@ function terrain_gen()
 	end
 end
 
+
+
+
+--[[
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	THIS ID TABLE NEEDS TO BE REWRITTEN SO THAT IT'S NOT COMPLETE SHIT!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+--rewrite it so it's modular like the enemy table
+
+
+]]--
+
 --make this load up an image if it's not already loaded up instead of doing this
 tile_id_table = {
 --{"name","texture","wall","hurtplayer"} --table example
 {"dirt"  ,love.graphics.newImage("dirt.png")   ,false ,false}, --dirt
+{"dead grass"  ,love.graphics.newImage("dead_grass.png")   ,false ,false}, --dirt
 {"wall"  ,love.graphics.newImage("wall.png")   ,true  ,false}, --wall
-{"dead grass"  ,love.graphics.newImage("dead_grass.png")   ,false ,false}, --wall
 }
 
 --Handling modification of the terrain - possibly have pickaxes and drills, and make a table for cracking tiles and such
 function modifyterrain()
-	
+	local tile = terrain[selected_tile[1]][selected_tile[2]]
+	if tile == 1 or tile == 2 then
+		terrain[selected_tile[1]][selected_tile[2]] = 3--math.random(1,tablelength(tile_id_table))
+	else
+		terrain[selected_tile[1]][selected_tile[2]] = math.random(1,2)
+	end
 end
 
 -- do this position for on the fly render adjust 
