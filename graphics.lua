@@ -1,3 +1,8 @@
+--[[
+IMPORTANT NOTES:
+everything needs to be set by the scale size
+]]--
+
 --draw the terrain
 function draw_map()
 	--draw map
@@ -34,7 +39,7 @@ function draw_map()
 			
 			local literalx = (((x * tilesize ) + windowcenter[1]) - ((playerpos[1]) * tilesize)) + movementfloat[1]
 			local literaly = (((y * tilesize ) + windowcenter[2]) - ((playerpos[2]) * tilesize)) + movementfloat[2]
-			love.graphics.draw(texture, literalx, literaly, 0, 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(texture, literalx, literaly, 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
 		end
 	end
 end
@@ -53,7 +58,7 @@ function draw_enemies()
 		local x,y = enemy_table[i]["pos"][1],enemy_table[i]["pos"][2]
 		--draw the enemy if it's onscreen
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
-			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
 			--debug visual
 			if enemy_table[i]["speed"] == walkspeed then
 				love.graphics.print('WALKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
@@ -85,7 +90,7 @@ function draw_items()
 		--draw the enemy if it's onscreen
 		--print_r(item_images)
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
-			love.graphics.draw(item_images[item_table[i]["item"]["key"]], item_table[i]["realpos"][1], item_table[i]["realpos"][2], 0, 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(item_images[item_table[i]["item"]["key"]], item_table[i]["realpos"][1], item_table[i]["realpos"][2], 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
 		end
 	end
 end
@@ -129,7 +134,7 @@ end
 function drawinventory()
 	if tablelength(inventory) > 0 then
 		for i = 1,tablelength(inventory) do
-			love.graphics.draw(item_images[inventory[i]], (64*(i-1))+(tilesize/2), windowheight-(tilesize/2), 0, 1, 1, tilesize / 2, tilesize / 2)
+			love.graphics.draw(item_images[inventory[i]], (64*(i-1))+(tilesize/2), windowheight-(tilesize/2), 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
 		end
 	end
 end

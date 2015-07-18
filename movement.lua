@@ -1,23 +1,9 @@
 --[[
-function collisiondetection()
-	if up or down or left or right then
-		local xer = goaltile[1] + 1
-		local yer = goaltile[2] + 1
-		if xer > 0 and xer <= mapsize[1] and yer > 0 and yer <= mapsize[2] then
-			if tile_id_table[terrain[xer][yer][3] == true then
-				--stop everything
-				goaltile = {0,0}
-				movementfloat = {0,0}
-				moving = false
-			end
-		else
-			--stop everything (map boundaries)
-			goaltile = {0,0}
-			movementfloat = {0,0}
-			moving = false
-		end
-	end
-end
+IMPORTANT NOTES!
+
+the movement needs to be based upon it's own value, not tile size, but multiplied by the tile size so that maps are scalable, this will require ->
+a total rewrite of player and enemy movement, but will greatly benefit the game in the future
+
 ]]--
 
 --these are the main controls for the player to move around the map

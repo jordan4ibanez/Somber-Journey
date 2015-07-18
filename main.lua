@@ -136,6 +136,8 @@ end
 
 function love.update(dt,movement)
 	
+	tilesizetest()
+	
 	--set fps in the window counter
 	local fps = love.timer.getFPS( )
 	love.window.setTitle("Somber Journey | FPS: "..fps)
