@@ -54,6 +54,9 @@ function playercontrols()
 			goaltile = nil
 			movementfloat = {0,0}
 			moving = false
+			
+			--collect the item under you too
+			collect_item()
 		end
 	end
 	--key input - only allow if not moving
@@ -155,7 +158,7 @@ function playerfacedir()
 			rottest = rot-goalrot
 		end
 		
-		local rotationadd = 15--/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
+		local rotationadd = 15/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
 				
 		--rotate the player
 		if goaltile then

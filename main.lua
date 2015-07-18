@@ -50,6 +50,9 @@ dofile("enemy.lua")
 dofile("gui.lua")
 dofile("weapons.lua")
 dofile("graphics.lua")
+dofile("inventory.lua")
+dofile("items.lua")
+dofile("conf.lua")
 
 
 
@@ -67,7 +70,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {200,200} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	mapsize       = {10,10} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 1
 	scale         = 1
 	offset        = {0,0}
@@ -98,6 +101,7 @@ function love.load()
 	
 	terrain_gen()
 	add_enemies()
+	generate_items()
 end
 
 
@@ -106,10 +110,14 @@ end
 --I draw the player as static, and the map and other entities move around them
 function love.draw()
 
+	getwindowcenter()
+	
 	--player actual pos
 	literalpos()
 	
 	draw_map()
+	
+	draw_items()	
 	
 	drawplayer()
 	
@@ -122,9 +130,16 @@ function love.draw()
 	--show the speed
 	showspeed()
 	
+	drawinventory()
+	
 end
 
 function love.update(dt,movement)
+	
+	--set fps in the window counter
+	local fps = love.timer.getFPS( )
+	love.window.setTitle("Somber Journey | FPS: "..fps)
+	
 	literal_pos_x = math.floor(((playerpos[1] * tilesize) - movementfloat[1])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	literal_pos_y = math.floor(((playerpos[2] * tilesize) - movementfloat[2])/tilesize + 0.5) -- do this position for on the fly render adjust 
 	playercontrols()

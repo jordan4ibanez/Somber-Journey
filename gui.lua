@@ -24,6 +24,7 @@ function tileselection()
 			for i = 1,tablelength(enemy_table) do
 				if enemy_table[i] then
 					if enemy_table[i]["pos"][1] == selected_tile[1] and enemy_table[i]["pos"][2] == selected_tile[2] then
+						enemycounter = enemycounter - 1
 						table.remove(enemy_table, i)
 					end
 				end

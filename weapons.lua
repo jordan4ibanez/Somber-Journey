@@ -87,5 +87,4 @@ gun_table = {
 			bayonet  = false, --if true then make it usable as a melee weapon
 		},
 	},
-	},
 }

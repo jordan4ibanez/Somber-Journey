@@ -6,8 +6,10 @@ think of more ideas
 --add enemies to global enemy table
 function add_enemies()
 	enemy_table = {}
+	enemycounter = 0
 	--I BET THIS CAN BE OPTIMIZED EVEN MOAR
-	for i = 1,math.random(1,maxenemies) do 
+	for i = 1,math.random(1,maxenemies) do
+		enemycounter = enemycounter + 1
 		table.insert(enemy_table, {
 							pos           = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)},
 							goaltile      = nil, 
@@ -23,6 +25,7 @@ end
 --this is just a fun testing function
 function add_enemies_to_table()
 	for i = 1,math.random(1,5) do
+		enemycounter = enemycounter + 1
 		table.insert(enemy_table, {
 							pos           = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)},
 							goaltile      = nil,
