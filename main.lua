@@ -70,7 +70,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {10,10} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	mapsize       = {50,50} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 1
 	scale         = 1
 	offset        = {0,0}
@@ -102,6 +102,7 @@ function love.load()
 	terrain_gen()
 	add_enemies()
 	generate_items()
+	generate_tile_images()
 end
 
 
@@ -136,7 +137,8 @@ end
 
 function love.update(dt,movement)
 	
-	tilesizetest()
+	--test the scaling of the map
+	--tilesizetest()
 	
 	--set fps in the window counter
 	local fps = love.timer.getFPS( )

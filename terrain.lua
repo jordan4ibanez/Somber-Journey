@@ -29,10 +29,18 @@ end
 --make this load up an image if it's not already loaded up instead of doing this
 tile_id_table = {
 --{"name","texture","wall","hurtplayer"} --table example
-{"dirt"  ,love.graphics.newImage("dirt.png")   ,false ,false}, --dirt
-{"dead grass"  ,love.graphics.newImage("dead_grass.png")   ,false ,false}, --dirt
-{"wall"  ,love.graphics.newImage("wall.png")   ,true  ,false}, --wall
+{"dirt"      ,"dirt.png"   ,false ,false}, --dirt
+{"dead grass","dead_grass.png"   ,false ,false}, --dirt
+{"wall"      ,"wall.png"   ,true  ,false}, --wall
 }
+
+function generate_tile_images()
+	tile_images    = {}
+	for i = 1,tablelength(tile_id_table) do
+		tile_images[tile_id_table[i][1]] = love.graphics.newImage(tile_id_table[i][2]) -- set the name of the tile as the key
+	end
+end
+
 
 --Handling modification of the terrain - possibly have pickaxes and drills, and make a table for cracking tiles and such
 function modifyterrain()

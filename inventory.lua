@@ -11,11 +11,27 @@ function collect_item()
 		end
 	end
 	for i = 1,tablelength(removaltable) do
-		table.insert(inventory, item_table[i]["item"]["key"])
+		inventory_add(item_table[removaltable[i]]["item"]["key"])
 		table.remove(item_table, removaltable[i])
-		--shorten the values of the other objects to compensate
+		--shorten the values of the other objects to compensate 1,2,3,4 (remove 2) 1,2,3
 		for x = i,tablelength(removaltable) do
 			removaltable[x] = removaltable[x] - 1
 		end
 	end
+end
+
+--add items to the inventory
+function inventory_add(item)
+	--if there's items in the invetory add
+	print(inventory[item])
+	if inventory[item] ~= nil then
+		print("-----------\nADDING ITEM IN INVENTORY\n--------------")
+		inventory[item]["value"] = inventory[item]["value"] + 1
+	else --if not, create one
+		print("-----------\nCREATING ITEM IN INVENTORY\n--------------")
+		inventory[item] = {}
+		inventory[item]["value"] = 1
+		inventory[item]["key"] = item
+	end
+	print_r(inventory)
 end

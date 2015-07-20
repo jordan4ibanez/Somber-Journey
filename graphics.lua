@@ -11,7 +11,6 @@ function draw_map()
 	local x_render    = math.floor(windowcenter[1]/tilesize + 0.5) + 1 --add one to make the radius one tile bigger than the screen width
 	local y_render    = math.floor(windowcenter[2]/tilesize + 0.5) + 1
 	local xmin,xmax,ymin,ymax = 0,0,0,0
-	
 	xmin = literal_pos_x - x_render
 	if xmin < 1 then
 		xmin = 1 
@@ -20,7 +19,6 @@ function draw_map()
 	if xmax > mapsize[1] then
 		xmax = mapsize[1]
 	end
-	
 	ymin = literal_pos_y - y_render
 	if ymin < 1 then
 		ymin = 1
@@ -29,12 +27,11 @@ function draw_map()
 	if ymax > mapsize[2] then
 		ymax = mapsize[2]
 	end
-		
 	for x = xmin,xmax do
 		for y = ymin,ymax do
 			--let's get the texture id from the id table
-			local texture = tile_id_table[terrain[x][y]][2]
-
+			local texture = tile_images[tile_id_table[terrain[x][y]][1]] -- get the tile image based on the tile id name
+			--print(tile_id_table[terrain[x][y]][1])
 			--here we center the map around the player
 			
 			local literalx = (((x * tilesize ) + windowcenter[1]) - ((playerpos[1]) * tilesize)) + movementfloat[1]
@@ -133,8 +130,17 @@ end
 --draw the inventory
 function drawinventory()
 	if tablelength(inventory) > 0 then
-		for i = 1,tablelength(inventory) do
-			love.graphics.draw(item_images[inventory[i]], (64*(i-1))+(tilesize/2), windowheight-(tilesize/2), 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+		local i = 0
+		for _,item in pairs(inventory) do
+			i = i + 1
+			love.graphics.setColor(0,0,0)
+			love.graphics.rectangle("fill", (64*(i-1)), (windowheight-(tilesize)), tilesize , tilesize )
+			love.graphics.setColor(255,255,255) -- reset colours
+			love.graphics.draw(item_images[item["key"]], (64*(i-1))+(tilesize/2), (windowheight-(tilesize/2)), 0, tilesize/64, tilesize/64, tilesize/2, tilesize/2)
+			love.graphics.setColor(0,0,0)
+			love.graphics.print(tostring(item["value"]), (64*(i-1))+(tilesize/2), (windowheight-(tilesize/2)))
+			love.graphics.setColor(255,255,255) -- reset colours
+			love.graphics.print(tostring(item["value"]), (64*(i-1))+(tilesize/2)-2, (windowheight-(tilesize/2)-2))
 		end
 	end
 end

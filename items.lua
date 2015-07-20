@@ -11,7 +11,7 @@ function generate_items()
 
 	for i = 1,100 do
 		itemcounter = itemcounter + 1
-		print(item_key_table[math.random(1,tablelength(item_key_table))])
+		--print(item_key_table[math.random(1,tablelength(item_key_table))])
 		table.insert(item_table, {
 							pos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)},
 							realpos = nil,
