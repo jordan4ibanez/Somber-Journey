@@ -59,6 +59,10 @@ dofile("conf.lua")
 --have the image be a string, then just replace the string with the data from love.graphics.newImage afterwards
 
 function love.load()
+
+	font = love.graphics.newFont("Asimov.otf", 14)
+	love.graphics.setFont(font)
+
 	math.randomseed( os.time() )
 	footstep      = love.audio.newSource("footstep.wav", "static")
 	fastfootstep  = love.audio.newSource("fastfootstep.wav", "static")
