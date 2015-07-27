@@ -10,6 +10,7 @@ a total rewrite of player and enemy movement, but will greatly benefit the game 
 function playercontrols()
 	playerfacedir()
 	
+	--if the player is moving then move them
 	if moving then
 		
 		if speed == walkspeed then
@@ -20,26 +21,34 @@ function playercontrols()
 			--don't play a sound
 		end
 		
+		local speed = 1
+		
 		if goaltile[1] ~= nil then
 			if goaltile[1] - playerpos[1] > 0 then
-				movementfloat[1] = movementfloat[1] - speed
+				movementfloat[1] = ((tilesize/steps)*step)*-1
+				step = step + 1
 			elseif goaltile[1] - playerpos[1] < 0 then
-				movementfloat[1] = movementfloat[1] + speed
+				movementfloat[1] = ((tilesize/steps)*step)
+				step = step + 1
 			end
 		end
 		if goaltile[2] ~= nil then
 			if goaltile[2] - playerpos[2] > 0 then
-				movementfloat[2] = movementfloat[2] - speed
+				movementfloat[2] = ((tilesize/steps)*step)*-1
+				step = step + 1
 			elseif goaltile[2] - playerpos[2] < 0 then
-				movementfloat[2] = movementfloat[2] + speed
+				movementfloat[2] = ((tilesize/steps)*step)
+				step = step + 1
 			end
 		end
 		--reset the variables so you can move at the end of the walk cycle
 		if math.abs(round(movementfloat[1], 1)) == tilesize or math.abs(round(movementfloat[2], 1)) == tilesize then
+			--stop everything
 			playerpos = goaltile
 			goaltile = nil
 			movementfloat = {0,0}
 			moving = false
+			step = 1
 			
 			--collect the item under you too
 			collect_item()
@@ -52,6 +61,9 @@ function playercontrols()
 	right = love.keyboard.isDown( "d" )
 	shift = love.keyboard.isDown( "lshift" )
 	ctrl  = love.keyboard.isDown( "lctrl" )
+	
+	
+	--if the player is not moving then don't move them
 	if not moving then
 		--do this so the smooth movement function works perfectly
 		if not goaltile then
@@ -106,12 +118,14 @@ function collisiondetection()
 				goaltile = nil
 				movementfloat = {0,0}
 				moving = false
+				step = 1
 			end
 		else
 			--stop everything (map boundaries)
 			goaltile = nil
 			movementfloat = {0,0}
 			moving = false
+			step = 1
 		end
 	end
 end

@@ -99,6 +99,7 @@ function enemy_movement()
 				end
 				--reset the variables so the enemy goes through the walk cycle again
 				if math.abs(round(enemy_table[i]["movementfloat"][1], 1)) == tilesize or math.abs(round(enemy_table[i]["movementfloat"][2], 1)) == tilesize then
+					--stop everything
 					enemy_table[i]["pos"][1] = enemy_table[i]["goaltile"][1]
 					enemy_table[i]["pos"][2] = enemy_table[i]["goaltile"][2]
 					enemy_table[i]["goaltile"] = {} --NEVER MAKE THIS {0,0} AGAIN - CAUSES ENEMIES TO TURN RANDOMLY

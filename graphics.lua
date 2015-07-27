@@ -36,7 +36,7 @@ function draw_map()
 			
 			local literalx = (((x * tilesize ) + windowcenter[1]) - ((playerpos[1]) * tilesize)) + movementfloat[1]
 			local literaly = (((y * tilesize ) + windowcenter[2]) - ((playerpos[2]) * tilesize)) + movementfloat[2]
-			love.graphics.draw(texture, literalx, literaly, 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+			love.graphics.draw(texture, literalx, literaly, 0, tilesize/64, tilesize/64, 32, 32)
 		end
 	end
 end
@@ -87,14 +87,16 @@ function draw_items()
 		--draw the enemy if it's onscreen
 		--print_r(item_images)
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
-			love.graphics.draw(item_images[item_table[i]["item"]["key"]], item_table[i]["realpos"][1], item_table[i]["realpos"][2], 0, tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+			love.graphics.draw(item_images[item_table[i]["item"]["key"]], item_table[i]["realpos"][1], item_table[i]["realpos"][2], 0, tilesize/64, tilesize/64, 32, 32)
 		end
 	end
 end
 
-
+--draw the player			
 function drawplayer()
-	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+	--tilesize/64 because that's the origin size of the image
+	--32 because that's the center of the image
+	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), tilesize/64, tilesize/64, 32, 32)
 end
 
 --draw the visual of the selected tile

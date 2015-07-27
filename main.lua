@@ -60,7 +60,7 @@ dofile("conf.lua")
 
 function love.load()
 
-	font = love.graphics.newFont("Asimov.otf", 14)
+	font = love.graphics.newFont("Kirvy.otf", 14)
 	love.graphics.setFont(font)
 
 	math.randomseed( os.time() )
@@ -79,11 +79,13 @@ function love.load()
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
+	--movement stuff
 	goaltile      = nil
 	movementfloat = {0,0}
-	
 	moving        = false
-	
+	steps         = 50
+	step          = 1
+	--speeds
 	sneakspeed    = 1
 	walkspeed     = 2
 	runspeed      = 4
@@ -142,7 +144,7 @@ end
 function love.update(dt,movement)
 	
 	--test the scaling of the map
-	--tilesizetest()
+	tilesizetest()
 	
 	--set fps in the window counter
 	local fps = love.timer.getFPS( )
