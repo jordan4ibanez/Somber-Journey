@@ -14,6 +14,7 @@ function collect_item()
 	end
 	--play the pickup sound
 	if collection == true then
+		pickup:stop()
 		pickup:play()
 	end
 	for i = 1,tablelength(removaltable) do

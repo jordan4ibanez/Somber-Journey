@@ -152,8 +152,9 @@ function drawinventory()
 			love.graphics.setColor(255,255,255) -- reset colours
 			love.graphics.print(tostring(item["value"]), (guiscale*(i-1))+(guiscale/2)-2, (windowheight-(guiscale/2)-2))
 			if invselection == i then
-				love.graphics.setColor(255,255,255)
+				love.graphics.setColor(255,0,0)
 				love.graphics.rectangle("line", (guiscale*(i-1)), (windowheight-(guiscale)), guiscale , guiscale )
+				love.graphics.setColor(255,255,255) -- reset colours
 			end
 		end
 		--make the gui scale up and down based on if the mouse is hovered over it
@@ -161,7 +162,9 @@ function drawinventory()
 				--draw the selection of the inventory
 				love.graphics.setColor(255,255,255)
 				love.graphics.rectangle("line", (guiscale*(math.floor(mousex/guiscale + 1)-1)), (windowheight-(guiscale)), guiscale , guiscale )
-				invselection = math.floor(mousex/guiscale + 1)
+				if love.mouse.isDown("l") then
+					invselection = math.floor(mousex/guiscale + 1)
+				end
 				
 				guihover = true
 				if guiscale < guimax then
