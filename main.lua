@@ -137,7 +137,7 @@ function love.draw()
 	draw_enemies()
 	
 	--draw the selected tile
-	--drawselection()
+	drawselection()
 	
 	--show the speed
 	showspeed()

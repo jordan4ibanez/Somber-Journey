@@ -4,7 +4,9 @@
 
 
 
-guiscale = 30
+guiscale     = 30
+guihover     = false
+invselection = 0
 
 --allow for mouse environment interactions
 function tileselection()
@@ -21,7 +23,7 @@ function tileselection()
 	
 	
 	if love.mouse.isDown("l") then
-		if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] then
+		if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] and guihover == false then
 			
 			--terrain modificaton test
 			modifyterrain()

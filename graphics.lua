@@ -107,7 +107,7 @@ end
 
 --draw the visual of the selected tile
 function drawselection()
-	if selection == true then
+	if selection == true and guihover == false then
 		love.graphics.rectangle("line", selectionx, selectiony, tilesize , tilesize )
 	end
 end
@@ -151,9 +151,19 @@ function drawinventory()
 			love.graphics.print(tostring(item["value"]), (guiscale*(i-1))+(guiscale/2), (windowheight-(guiscale)))
 			love.graphics.setColor(255,255,255) -- reset colours
 			love.graphics.print(tostring(item["value"]), (guiscale*(i-1))+(guiscale/2)-2, (windowheight-(guiscale/2)-2))
+			if invselection == i then
+				love.graphics.setColor(255,255,255)
+				love.graphics.rectangle("line", (guiscale*(i-1)), (windowheight-(guiscale)), guiscale , guiscale )
+			end
 		end
-
+		--make the gui scale up and down based on if the mouse is hovered over it
 		if (mousex >= 0 and mousex <= (guiscale*(i))) and (mousey <= windowheight and mousey >= (windowheight-guiscale)) then
+				--draw the selection of the inventory
+				love.graphics.setColor(255,255,255)
+				love.graphics.rectangle("line", (guiscale*(math.floor(mousex/guiscale + 1)-1)), (windowheight-(guiscale)), guiscale , guiscale )
+				invselection = math.floor(mousex/guiscale + 1)
+				
+				guihover = true
 				if guiscale < guimax then
 					guiscale = guiscale + 3
 				end
@@ -161,6 +171,7 @@ function drawinventory()
 					guiscale = guimax
 				end
 		else
+			guihover = false
 			if guiscale ~= guimin then
 				if guiscale > guimin then
 					guiscale = guiscale - 3
