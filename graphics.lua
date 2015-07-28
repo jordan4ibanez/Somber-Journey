@@ -137,21 +137,38 @@ end
 
 --draw the inventory
 function drawinventory()
-
-	local guisize = 64
-
+	local guimax,guimin = 128,30
+	local mousex,mousey = love.mouse.getPosition( )
 	if tablelength(inventory) > 0 then
 		local i = 0
 		for _,item in pairs(inventory) do
 			i = i + 1
 			love.graphics.setColor(0,0,0)
-			love.graphics.rectangle("fill", (tilesize*(i-1)), (windowheight-(tilesize)), tilesize , tilesize )
+			love.graphics.rectangle("fill", (guiscale*(i-1)), (windowheight-(guiscale)), guiscale , guiscale )
 			love.graphics.setColor(255,255,255) -- reset colours
-			love.graphics.draw(item_images[item["key"]], (tilesize*(i-1))+(tilesize/2), (windowheight-(tilesize/2)), 0, tilesize/64, tilesize/64, 32, 32)
+			love.graphics.draw(item_images[item["key"]], (guiscale*(i-1))+(guiscale/2), (windowheight-(guiscale/2)), 0, guiscale/64, guiscale/64, 32, 32)
 			love.graphics.setColor(0,0,0)
-			love.graphics.print(tostring(item["value"]), (tilesize*(i-1))+(tilesize/2), (windowheight-(tilesize)))
+			love.graphics.print(tostring(item["value"]), (guiscale*(i-1))+(guiscale/2), (windowheight-(guiscale)))
 			love.graphics.setColor(255,255,255) -- reset colours
-			love.graphics.print(tostring(item["value"]), (tilesize*(i-1))+(tilesize/2)-2, (windowheight-(tilesize/2)-2))
+			love.graphics.print(tostring(item["value"]), (guiscale*(i-1))+(guiscale/2)-2, (windowheight-(guiscale/2)-2))
+		end
+
+		if (mousex >= 0 and mousex <= (guiscale*(i))) and (mousey <= windowheight and mousey >= (windowheight-guiscale)) then
+				if guiscale < guimax then
+					guiscale = guiscale + 3
+				end
+				if guiscale > guimax then
+					guiscale = guimax
+				end
+		else
+			if guiscale ~= guimin then
+				if guiscale > guimin then
+					guiscale = guiscale - 3
+				end
+				if guiscale < guimin then
+					guiscale = guimin
+				end
+			end
 		end
 	end
 end

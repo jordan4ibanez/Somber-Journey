@@ -1,7 +1,14 @@
+
+
+--you were making the gui grow bigger when you mouse over it, then making it grow smaller when not moused over
+
+
+
+guiscale = 30
+
 --allow for mouse environment interactions
 function tileselection()
-	mousex,mousey = love.mouse.getPosition( )
-	--this is broken - this allows the mouse to select random tiles that actually aren't selected
+	local mousex,mousey = love.mouse.getPosition( )
 	--selectionx    = ((math.floor(((mousex-movementfloat[1])+windowcenter[1])/tilesize)*tilesize)-(windowcenter[1]))+(movementfloat[1])
 	selectionx    = (((math.floor((mousex-windowcenter[1]-movementfloat[1])/tilesize + 0.5) * tilesize ) + windowcenter[1]) - (tilesize/2))+movementfloat[1]
 	selectiony    = (((math.floor((mousey-windowcenter[2]-movementfloat[2])/tilesize + 0.5) * tilesize ) + windowcenter[2]) - (tilesize/2))+movementfloat[2]

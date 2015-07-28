@@ -3,12 +3,18 @@ inventory = {}
 
 --have this go when the player stops moving
 function collect_item()
+	local collection   = false
 	local removaltable = {}
 	--check all the items needed to be removed
 	for i = 1,tablelength(item_table) do
 		if item_table[i]["pos"][1] == playerpos[1] and item_table[i]["pos"][2] == playerpos[2] then
 			table.insert(removaltable, i)
+			collection = true
 		end
+	end
+	--play the pickup sound
+	if collection == true then
+		pickup:play()
 	end
 	for i = 1,tablelength(removaltable) do
 		inventory_add(item_table[removaltable[i]]["item"]["key"])

@@ -66,10 +66,11 @@ function love.load()
 	math.randomseed( os.time() )
 	footstep      = love.audio.newSource("footstep.wav", "static")
 	fastfootstep  = love.audio.newSource("fastfootstep.wav", "static")
+	pickup        = love.audio.newSource("pickup.ogg", "static")
 	dig           = love.audio.newSource("dig.wav", "static")
 	
 	--note here: When drawing stuff, do tilesize/64 to get the scale
-	tilesize      = 64 -- for high quality 16 bit graphics 
+	tilesize      = 65 -- for high quality 16 bit graphics 
 	
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
@@ -88,7 +89,7 @@ function love.load()
 	--speeds
 	sneakspeed    = 100
 	walkspeed     = 70
-	runspeed      = 45
+	runspeed      = 30
 	speed         = walkspeed
 	
 	windowwidth   = love.graphics.getWidth()
@@ -136,7 +137,7 @@ function love.draw()
 	draw_enemies()
 	
 	--draw the selected tile
-	drawselection()
+	--drawselection()
 	
 	--show the speed
 	showspeed()
