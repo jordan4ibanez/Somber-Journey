@@ -74,8 +74,8 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {50,50} --Truely huge maps (break this up into chunks (8000x8000 for now))
-	maxenemies    = 1
+	mapsize       = {10,10} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	maxenemies    = 10
 	scale         = 1
 	offset        = {0,0}
 	playerpos     = {math.random(1,mapsize[1]-1),math.random(1,mapsize[2]-1)}
@@ -86,9 +86,9 @@ function love.load()
 	steps         = 50
 	step          = 1
 	--speeds
-	sneakspeed    = 1
-	walkspeed     = 2
-	runspeed      = 4
+	sneakspeed    = 100
+	walkspeed     = 70
+	runspeed      = 45
 	
 	speed         = walkspeed
 	windowwidth   = love.graphics.getWidth()

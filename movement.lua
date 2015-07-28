@@ -13,11 +13,11 @@ function playercontrols()
 	--if the player is moving then move them
 	if moving then
 		
-		if speed == walkspeed then
+		if steps == walkspeed then
 			footstep:play()
-		elseif speed == runspeed then
+		elseif steps == runspeed then
 			fastfootstep:play()
-		elseif speed == sneakspeed then
+		elseif steps == sneakspeed then
 			--don't play a sound
 		end
 		
@@ -71,11 +71,11 @@ function playercontrols()
 		end
 		--
 		if shift then
-			speed = sneakspeed
+			steps = sneakspeed
 		elseif ctrl then
-			speed = runspeed
+			steps = runspeed
 		else
-			speed = walkspeed
+			steps = walkspeed
 		end
 		if up then
 			--offset[2] = offset[2] + 1
@@ -158,7 +158,8 @@ function playerfacedir()
 			rottest = rot-goalrot
 		end
 		
-		local rotationadd = 15/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
+		--local rotationadd = 15/(4/speed) -- the speed at which the player turns - max speed divided by max speed because that works well for now
+		local rotationadd = 15
 				
 		--rotate the player
 		if goaltile then

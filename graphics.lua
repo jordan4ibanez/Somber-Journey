@@ -55,7 +55,7 @@ function draw_enemies()
 		local x,y = enemy_table[i]["pos"][1],enemy_table[i]["pos"][2]
 		--draw the enemy if it's onscreen
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
-			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), tilesize/64, tilesize/64, tilesize / 2, tilesize / 2)
+			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), tilesize/64, tilesize/64, 32, 32)
 			--debug visual
 			if enemy_table[i]["speed"] == walkspeed then
 				love.graphics.print('WALKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)

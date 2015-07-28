@@ -19,6 +19,8 @@ function add_enemies()
 							rotation      = 0,
 							goalrotation  = nil,
 							realpos       = {0,0}, -- the float pos on the map
+							steps         = 50,
+							step          = 1,
 						})
 	end
 end
@@ -35,6 +37,8 @@ function add_enemies_to_table()
 							rotation      = 0,
 							goalrotation  = nil,
 							realpos       = {0,0}, -- the float pos on the map
+							steps         = 50,
+							step          = 1,
 						})
 	end
 end
@@ -49,12 +53,14 @@ function enemycollisiondetection(i)
 			enemy_table[i]["goaltile"] = {}--NEVER MAKE THIS {0,0} AGAIN - CAUSES ENEMIES TO TURN RANDOMLY
 			enemy_table[i]["movementfloat"] = {0,0}
 			enemy_table[i]["moving"] = false
+			enemy_table[i]["step"] = 1
 		end
 	else
 		--stop everything (map boundaries)
 		enemy_table[i]["goaltile"] = {} --NEVER MAKE THIS {0,0} AGAIN - CAUSES ENEMIES TO TURN RANDOMLY
 		enemy_table[i]["movementfloat"] = {0,0}
 		enemy_table[i]["moving"] = false
+		enemy_table[i]["step"] = 1
 	end
 end
 
@@ -85,16 +91,20 @@ function enemy_movement()
 			if enemy_table[i]["moving"] then
 				if enemy_table[i]["goaltile"][1] ~= nil then
 					if enemy_table[i]["goaltile"][1] - enemy_table[i]["pos"][1] > 0 then
-						enemy_table[i]["movementfloat"][1] = enemy_table[i]["movementfloat"][1] + enemy_table[i]["speed"]
+						enemy_table[i]["movementfloat"][1] = ((tilesize/enemy_table[i]["steps"])*enemy_table[i]["step"])
+						enemy_table[i]["step"] = enemy_table[i]["step"] + 1
 					elseif enemy_table[i]["goaltile"][1] - enemy_table[i]["pos"][1] < 0 then
-						enemy_table[i]["movementfloat"][1] = enemy_table[i]["movementfloat"][1] - enemy_table[i]["speed"]
+						enemy_table[i]["movementfloat"][1] = ((tilesize/enemy_table[i]["steps"])*enemy_table[i]["step"])*-1
+						enemy_table[i]["step"] = enemy_table[i]["step"] + 1
 					end
 				end
 				if enemy_table[i]["goaltile"][2] ~= nil then
 					if enemy_table[i]["goaltile"][2] - enemy_table[i]["pos"][2] > 0 then
-						enemy_table[i]["movementfloat"][2] = enemy_table[i]["movementfloat"][2] + enemy_table[i]["speed"]
+						enemy_table[i]["movementfloat"][2] = ((tilesize/enemy_table[i]["steps"])*enemy_table[i]["step"])
+						enemy_table[i]["step"] = enemy_table[i]["step"] + 1
 					elseif enemy_table[i]["goaltile"][2] - enemy_table[i]["pos"][2] < 0 then
-						enemy_table[i]["movementfloat"][2] = enemy_table[i]["movementfloat"][2] - enemy_table[i]["speed"]
+						enemy_table[i]["movementfloat"][2] = ((tilesize/enemy_table[i]["steps"])*enemy_table[i]["step"])*-1
+						enemy_table[i]["step"] = enemy_table[i]["step"] + 1
 					end
 				end
 				--reset the variables so the enemy goes through the walk cycle again
@@ -105,6 +115,7 @@ function enemy_movement()
 					enemy_table[i]["goaltile"] = {} --NEVER MAKE THIS {0,0} AGAIN - CAUSES ENEMIES TO TURN RANDOMLY
 					enemy_table[i]["movementfloat"] = {0,0}
 					enemy_table[i]["moving"] = false
+					enemy_table[i]["step"] = 1
 				end
 				
 			end
@@ -116,8 +127,8 @@ function enemy_movement()
 					enemy_table[i]["goaltile"] = {} --NEVER MAKE THIS {0,0} AGAIN - CAUSES ENEMIES TO TURN RANDOMLY
 				end
 				--give enemies random speed
-				local speedtable = {1,2,4}
-				enemy_table[i]["speed"] = speedtable[math.random(1,3)]                     ----------------------------------------------------------============DEBUG!!s
+				local speedtable = {sneakspeed,walkspeed,runspeed}
+				enemy_table[i]["steps"] = speedtable[math.random(1,3)]                     ----------------------------------------------------------============DEBUG!!s
 				if direction == 1 then
 					--offset[2] = offset[2] + 1
 					enemy_table[i]["goaltile"][1] = enemy_table[i]["pos"][1]
@@ -177,7 +188,8 @@ function enemyfacedir(i)
 	if enemy_table[i]["goalrotation"] then
 		rottest = enemy_table[i]["rotation"]-enemy_table[i]["goalrotation"]
 	end
-	local rotationadd = 15/(4/enemy_table[i]["speed"]) -- the speed at which the enemy turns
+	--local rotationadd = 15/(4/enemy_table[i]["speed"]) -- the speed at which the enemy turns
+	local rotationadd = 15
 	if enemy_table[i]["goaltile"] then
 		if enemy_table[i]["goaltile"][1] ~= nil or enemy_table[i]["goaltile"][2] ~= nil then
 			if enemy_table[i]["rotation"] ~= nil and enemy_table[i]["rotation"] ~= enemy_table[i]["goalrotation"] then
