@@ -92,11 +92,17 @@ function draw_items()
 	end
 end
 
+
 --draw the player			
 function drawplayer()
 	--tilesize/64 because that's the origin size of the image
 	--32 because that's the center of the image
 	love.graphics.draw(player, (windowwidth/2), (windowheight/2), math.rad(rot), tilesize/64, tilesize/64, 32, 32)
+end
+
+--camera positioning and such
+function camerastuff()
+
 end
 
 --draw the visual of the selected tile

@@ -106,6 +106,9 @@ function love.load()
 	
 	itemamount = 200
 	
+	--stuff to move the camera around, like for rocket launchers to follow the missiles and whatnot
+	camera = {10,10}
+	
 	terrain_gen()
 	add_enemies()
 	generate_items()
