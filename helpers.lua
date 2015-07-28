@@ -28,9 +28,9 @@ function tilesizetest()
 		tilesize = tilesize - 1
 	end
 	
-	if tilesize == 64 then
+	if tilesize == 128 then
 		tileadd = false
-	elseif tilesize == 32 then
+	elseif tilesize == 10 then
 		tileadd = true
 	end
 end

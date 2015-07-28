@@ -74,7 +74,7 @@ function love.load()
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
 	
-	mapsize       = {10,10} --Truely huge maps (break this up into chunks (8000x8000 for now))
+	mapsize       = {100,100} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 10
 	scale         = 1
 	offset        = {0,0}
@@ -89,8 +89,8 @@ function love.load()
 	sneakspeed    = 100
 	walkspeed     = 70
 	runspeed      = 45
-	
 	speed         = walkspeed
+	
 	windowwidth   = love.graphics.getWidth()
 	windowheight  = love.graphics.getHeight()
 	windowcenter  = {windowwidth/2,windowheight/2}
@@ -98,12 +98,13 @@ function love.load()
 	selection     = false
 	
 	--directional vars
-	rot = 0
+	rot           = 0
+	dleft         = 270
+	dright        = 90
+	dup           = 0
+	ddown         = 180
 	
-	dleft  = 270
-	dright = 90
-	dup    = 0
-	ddown  = 180
+	itemamount = 200
 	
 	terrain_gen()
 	add_enemies()

@@ -57,11 +57,11 @@ function draw_enemies()
 		if x >= xmin and x <= xmax and y >= ymin and y <= ymax then
 			love.graphics.draw(enemy, enemy_table[i]["realpos"][1], enemy_table[i]["realpos"][2], math.rad(enemy_table[i]["rotation"]), tilesize/64, tilesize/64, 32, 32)
 			--debug visual
-			if enemy_table[i]["speed"] == walkspeed then
+			if enemy_table[i]["steps"] == walkspeed then
 				love.graphics.print('WALKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
-			elseif enemy_table[i]["speed"] == runspeed then
+			elseif enemy_table[i]["steps"] == runspeed then
 				love.graphics.print('RUNNING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
-			elseif enemy_table[i]["speed"] == sneakspeed then
+			elseif enemy_table[i]["steps"] == sneakspeed then
 				love.graphics.print('SNEAKING', enemy_table[i]["realpos"][1]-(tilesize/2), enemy_table[i]["realpos"][2]+20)
 			end
 		end
@@ -113,11 +113,11 @@ function showspeed()
 	love.graphics.rectangle("fill", 0, 0, 130 , 90 )
 	love.graphics.setColor(255,255,255) -- reset colours
 	if moving == true then
-		if speed == walkspeed then
+		if steps == walkspeed then
 			love.graphics.print('WALKING', 10, 10)
-		elseif speed == runspeed then
+		elseif steps == runspeed then
 			love.graphics.print('RUNNING', 10, 10)
-		elseif speed == sneakspeed then
+		elseif steps == sneakspeed then
 			love.graphics.print('SNEAKING', 10, 10)
 		end
 	else
@@ -131,18 +131,21 @@ end
 
 --draw the inventory
 function drawinventory()
+
+	local guisize = 64
+
 	if tablelength(inventory) > 0 then
 		local i = 0
 		for _,item in pairs(inventory) do
 			i = i + 1
 			love.graphics.setColor(0,0,0)
-			love.graphics.rectangle("fill", (64*(i-1)), (windowheight-(tilesize)), tilesize , tilesize )
+			love.graphics.rectangle("fill", (tilesize*(i-1)), (windowheight-(tilesize)), tilesize , tilesize )
 			love.graphics.setColor(255,255,255) -- reset colours
-			love.graphics.draw(item_images[item["key"]], (64*(i-1))+(tilesize/2), (windowheight-(tilesize/2)), 0, tilesize/64, tilesize/64, tilesize/2, tilesize/2)
+			love.graphics.draw(item_images[item["key"]], (tilesize*(i-1))+(tilesize/2), (windowheight-(tilesize/2)), 0, tilesize/64, tilesize/64, 32, 32)
 			love.graphics.setColor(0,0,0)
-			love.graphics.print(tostring(item["value"]), (64*(i-1))+(tilesize/2), (windowheight-(tilesize/2)))
+			love.graphics.print(tostring(item["value"]), (tilesize*(i-1))+(tilesize/2), (windowheight-(tilesize)))
 			love.graphics.setColor(255,255,255) -- reset colours
-			love.graphics.print(tostring(item["value"]), (64*(i-1))+(tilesize/2)-2, (windowheight-(tilesize/2)-2))
+			love.graphics.print(tostring(item["value"]), (tilesize*(i-1))+(tilesize/2)-2, (windowheight-(tilesize/2)-2))
 		end
 	end
 end

@@ -9,7 +9,7 @@ function generate_items()
 	itemcounter = 0
 	generate_item_things()
 
-	for i = 1,100 do
+	for i = 1,itemamount do
 		itemcounter = itemcounter + 1
 		--print(item_key_table[math.random(1,tablelength(item_key_table))])
 		table.insert(item_table, {
