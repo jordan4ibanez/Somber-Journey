@@ -1,15 +1,4 @@
-
-
-
-
---CURRENTLY IN A FEATURE FREEZE!!!!!! THERE ARE A LOT OF BUGS THAT I'M FIXING SO IF YOU LOOK AT THIS SOMETHING MIGHT BE BROKEN UNTIL THIS WARNING IS REMOVED!!!!
-
-
-
-
-
-
-
+--http://soundimage.org/   --music for the game
 
 --[[
 PROJECT GOALS:
@@ -91,7 +80,7 @@ function love.load()
 	--speeds
 	sneakspeed    = 100
 	walkspeed     = 70
-	runspeed      = 30
+	runspeed      = 20
 	speed         = walkspeed
 	
 	windowwidth   = love.graphics.getWidth()
