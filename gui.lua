@@ -26,10 +26,8 @@ function tileselection()
 		if selected_tile[1] >= 1 and selected_tile[1] <= mapsize[1] and selected_tile[2] >= 1 and selected_tile[2] <= mapsize[2] and guihover == false then
 			
 			--terrain modificaton test
-			modifyterrain()
+			--modifyterrain()
 			
-			dig:stop()
-			dig:play()
 			for i = 1,tablelength(enemy_table) do
 				if enemy_table[i] then
 					if enemy_table[i]["pos"][1] == selected_tile[1] and enemy_table[i]["pos"][2] == selected_tile[2] then

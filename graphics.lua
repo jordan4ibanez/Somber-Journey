@@ -162,6 +162,7 @@ function drawinventory()
 				--draw the selection of the inventory
 				love.graphics.setColor(255,255,255)
 				love.graphics.rectangle("line", (guiscale*(math.floor(mousex/guiscale + 1)-1)), (windowheight-(guiscale)), guiscale , guiscale )
+				--if player clicks then make that item the selected item
 				if love.mouse.isDown("l") then
 					invselection = math.floor(mousex/guiscale + 1)
 				end

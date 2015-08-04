@@ -50,6 +50,8 @@ function modifyterrain()
 	else
 		terrain[selected_tile[1]][selected_tile[2]] = math.random(1,2)
 	end
+	dig:stop()
+	dig:play()
 end
 
 -- do this position for on the fly render adjust 

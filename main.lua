@@ -74,6 +74,8 @@ function love.load()
 	
 	player        = love.graphics.newImage("player.png")
 	enemy         = love.graphics.newImage("enemy.png")
+	crosshair     = love.mouse.newCursor("crosshair.png", 32, 32)
+	love.mouse.setCursor(crosshair)
 	
 	mapsize       = {100,100} --Truely huge maps (break this up into chunks (8000x8000 for now))
 	maxenemies    = 10
@@ -149,7 +151,7 @@ end
 function love.update(dt,movement)
 	
 	--test the scaling of the map
-	tilesizetest()
+	--tilesizetest()
 	
 	--set fps in the window counter
 	local fps = love.timer.getFPS( )
